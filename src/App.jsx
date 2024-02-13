@@ -1,22 +1,55 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { mockData } from './mockData';
 // components import
 import Navbar from './Components/Navbar/Navbar';
 import Main from './Components/Main/Main';
 import MyCard from './Components/MyCard/MyCard';
-import './App.css';
+import Best from './Components/Best/Best';
+import './App.scss';
 
 function App() {
-  const [tab, setTab] = useState('all');
   const [cardData, setCardData] = useState([]);
-  console.log('text');
+  const [data, setData] = useState(mockData);
+  const handleAddToCard = (item) => {
+    setCardData([...cardData, item]);
+    // isfiltruojame itema is maino
+    const filteredData = data.filter(
+      // jeigu title jau yra tada ismesti ji is saraso
+      (dataItem) => dataItem.title !== item.title
+    );
+    // nurodome kad turi buti atvaizduojamas atnujintas sarasas
+    setData(filteredData);
+  };
+  // isfiltruojame is  pacio card kad griztu vel i main
+  const handleRemoveFromCard = (item) => {
+    setData([...data, item]);
+
+    const filteredCardData = cardData.filter(
+      (dataItem) => dataItem.title !== item.title
+    );
+    setCardData(filteredCardData);
+  };
+
   return (
     <>
       {/* kad importuotusi i html, funk kompon is didzios raides */}
-      <Navbar setTab={setTab} />
-      {tab === 'all' && <Main setCardData={setCardData} />}
-      {tab === 'card' && (
-        <MyCard cardData={cardData} setCardData={setCardData} />
-      )}
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Main data={data} setData={setData} setCardData={handleAddToCard} />
+          }
+        />
+        <Route
+          path="/my-cart"
+          element={
+            <MyCard cardData={cardData} setCardData={handleRemoveFromCard} />
+          }
+        />
+        <Route path="/best" element={<Best />} />
+      </Routes>
     </>
   );
 }

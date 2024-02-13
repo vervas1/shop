@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  //   tarpas tart cardu
+  gap: 2rem;
+  //   permesti i kita eilute jeigu netelpa i viena
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}

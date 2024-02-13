@@ -12,13 +12,21 @@
     list-style: none;
     column-gap: 2rem;
     li {
-      cursor: pointer;
-      transition: all 0.2 ease;
-      &:hover {
-        color: var(---blue);
-      }
-      &:active {
-        color: var(---blue);
+      a {
+        text-decoration: none;
+        color: black;
+        transition: all 0.2 ease;
+
+        a:hover {
+          color: var(---blue);
+        }
+        &:hover {
+          color: var(---blue);
+        }
+        &.active,
+        &:active {
+          color: var(---blue);
+        }
       }
     }
   }

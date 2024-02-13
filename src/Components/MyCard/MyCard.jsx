@@ -4,7 +4,7 @@ import Card from '../Card/Card';
 
 function MyCard({ cardData, setCardData }) {
   return (
-    <main>
+    <main className="container">
       {cardData?.map(({ title, description, img }) => (
         <Card
           key={title}
@@ -12,6 +12,7 @@ function MyCard({ cardData, setCardData }) {
           description={description}
           img={img}
           setCardData={setCardData}
+          card={true}
         />
       ))}
     </main>
