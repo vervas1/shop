@@ -2,9 +2,9 @@ import React from 'react';
 import './card.scss';
 
 // kad isakarto eitu i title ir descrip, kuriam masyva ir nurodome ka ieskoti
-function Card({ title, description, img, setCardData, card }) {
+function Card({ title, description, img, handleCardButton, card }) {
   const handleAddToCard = () => {
-    setCardData({ title, description, img });
+    handleCardButton({ title, description, img });
   };
   return (
     <div className="card">

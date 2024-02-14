@@ -1,0 +1,14 @@
+.sort-btn {
+  width: 100%;
+
+  button {
+    background-color: var(---maincol);
+    border-radius: 5px;
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+  }
+  :hover {
+    background-color: var(---tan);
+  }
+}

@@ -39,13 +39,21 @@ function App() {
         <Route
           path="/"
           element={
-            <Main data={data} setData={setData} setCardData={handleAddToCard} />
+            <Main
+              data={data}
+              setData={setData}
+              handleAddToCard={handleAddToCard}
+            />
           }
         />
         <Route
           path="/my-cart"
           element={
-            <MyCard cardData={cardData} setCardData={handleRemoveFromCard} />
+            <MyCard
+              cardData={cardData}
+              setCardData={setCardData}
+              handleRemoveFromCard={handleRemoveFromCard}
+            />
           }
         />
         <Route path="/best" element={<Best />} />
