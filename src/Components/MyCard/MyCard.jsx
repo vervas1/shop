@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { handleSort } from '../../utils/sortUtils';
 // component
 import Card from '../Card/Card';
 import SortButtons from '../SortButtons/SortButtons';
+import { AppContext } from '../../context/AppContext';
 
-function MyCard({ cardData, setCardData, handleRemoveFromCard }) {
+function MyCard() {
+  const { cardData, setCardData, handleRemoveFromCard } =
+    useContext(AppContext);
   const handleSortData = (direction) => {
     const sortedData = handleSort(cardData, direction);
     setCardData(sortedData);

@@ -1,13 +1,16 @@
 // components, is didziosios raides rasome
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { handleSort } from '../../utils/sortUtils';
 
 import Card from '../Card/Card';
 import SortButtons from '../SortButtons/SortButtons';
 import './main.scss';
+import { AppContext } from '../../context/AppContext';
 
-function Main({ handleAddToCard, data, setData }) {
+function Main() {
+  const { data, setData, handleAddToCard } = useContext(AppContext);
+
   const handleSortData = (direction) => {
     const sortedData = handleSort(data, direction);
     setData(sortedData);
