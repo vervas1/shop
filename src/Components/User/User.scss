@@ -1,0 +1,24 @@
+.user {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(---blue);
+  text-align: center;
+  line-height: 3rem;
+  font-size: 1.8rem;
+  &:hover {
+    background-color: #335073;
+  }
+}
+
+.offcanvas {
+  background-color: var(---bg) !important;
+
+  Offcanvas.Header {
+    border-top: 2rem;
+  }
+}
+svg {
+  margin-right: 1rem;
+}

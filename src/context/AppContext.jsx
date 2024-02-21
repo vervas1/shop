@@ -6,6 +6,8 @@ export const AppContext = createContext();
 function AppContextProvider(props) {
   const [cardData, setCardData] = useState([]);
   const [data, setData] = useState(mockData);
+  const [favoritesData, setFavoritesData] = useState([]);
+
   const handleAddToCard = (item) => {
     setCardData([...cardData, item]);
     // isfiltruojame itema is maino
@@ -26,15 +28,30 @@ function AppContextProvider(props) {
     setCardData(filteredCardData);
   };
 
+  const handleAddToFavorites = (item) => {
+    setFavoritesData([...favoritesData, item]);
+  };
+
+  const handleRemoveFromFavorites = (item) => {
+    const filteredFavoritesData = favoritesData.filter(
+      (dataItem) => dataItem.title !== item.title
+    );
+    setFavoritesData(filteredFavoritesData);
+  };
+
   return (
     <AppContext.Provider
       value={{
         cardData,
         setCardData,
+        favoritesData,
+        setFavoritesData,
         data,
         setData,
         handleAddToCard,
         handleRemoveFromCard,
+        handleRemoveFromFavorites,
+        handleAddToFavorites,
       }}
     >
       {props.children}

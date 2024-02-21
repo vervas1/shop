@@ -1,6 +1,7 @@
 .main {
   &-container {
     display: flex;
+    justify-content: space-evenly;
     //   tarpas tart cardu
     gap: 2rem;
     //   permesti i kita eilute jeigu netelpa i viena
