@@ -1,12 +1,28 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { mockData } from '../mockData';
+import { CardText } from 'react-bootstrap';
 
 export const AppContext = createContext();
 
 function AppContextProvider(props) {
-  const [cardData, setCardData] = useState([]);
-  const [data, setData] = useState(mockData);
-  const [favoritesData, setFavoritesData] = useState([]);
+  const [cardData, setCardData] = useState(
+    JSON.parse(localStorage.getItem('cardData')) || []
+  );
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem('data')) || mockData
+  );
+  const [favoritesData, setFavoritesData] = useState(
+    JSON.parse(localStorage.getItem('favoritesData')) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem('cartData', JSON.stringify(cardData));
+  }, [data, cardData, favoritesData]);
+
+  useEffect(() => {
+    localStorage.setItem('favoritesData', JSON.stringify(favoritesData));
+  }, [favoritesData]);
 
   const handleAddToCard = (item) => {
     setCardData([...cardData, item]);
@@ -17,10 +33,12 @@ function AppContextProvider(props) {
     );
     // nurodome kad turi buti atvaizduojamas atnujintas sarasas
     setData(filteredData);
+    localStorage.setItem('data', JSON.stringify(filteredData));
   };
 
   const handleRemoveFromCard = (item) => {
     setData([...data, item]);
+    localStorage.setItem('data', JSON.stringify([item, ...data]));
 
     const filteredCardData = cardData.filter(
       (dataItem) => dataItem.title !== item.title
