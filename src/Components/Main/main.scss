@@ -26,3 +26,17 @@
     background-color: var(---maincol);
   }
 }
+
+.container-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+
+  input {
+    padding: 10px;
+    border: 1px solid rgb(195, 193, 193);
+    border-radius: 5px;
+  }
+}

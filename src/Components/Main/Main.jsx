@@ -1,5 +1,5 @@
 // components, is didziosios raides rasome
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { handleSort } from '../../utils/sortUtils';
 
@@ -10,6 +10,8 @@ import { AppContext } from '../../context/AppContext';
 
 function Main() {
   const { data, setData, handleAddToCard } = useContext(AppContext);
+  // kintamasis paieskai
+  const [searchValue, setSearchValue] = useState('');
 
   const handleSortData = (direction) => {
     const sortedData = handleSort(data, direction);
@@ -18,19 +20,31 @@ function Main() {
 
   return (
     <main className="main-container">
-      <SortButtons handleSortData={handleSortData} />
+      <div className="container-actions">
+        <SortButtons handleSortData={handleSortData} />
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => {
+            setSearchValue(e.target.value.toLowerCase());
+          }}
+        />
+      </div>
 
-      {data.map((item) => {
-        return (
-          <Card
-            key={item.title}
-            title={item.title}
-            description={item.description}
-            img={item.img}
-            handleCardButton={handleAddToCard}
-          />
-        );
-      })}
+      {data
+        // paieskos filterinimas
+        .filter(({ title }) => title.toLowerCase().includes(searchValue))
+        .map((item) => {
+          return (
+            <Card
+              key={item.title}
+              title={item.title}
+              description={item.description}
+              img={item.img}
+              handleCardButton={handleAddToCard}
+            />
+          );
+        })}
     </main>
   );
 }
