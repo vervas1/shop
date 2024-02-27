@@ -18,7 +18,7 @@ function AppContextProvider(props) {
   useEffect(() => {
     localStorage.setItem('data', JSON.stringify(data));
     localStorage.setItem('cartData', JSON.stringify(cardData));
-  }, [data, cardData, favoritesData]);
+  }, [data, cardData]);
 
   useEffect(() => {
     localStorage.setItem('favoritesData', JSON.stringify(favoritesData));
@@ -33,12 +33,10 @@ function AppContextProvider(props) {
     );
     // nurodome kad turi buti atvaizduojamas atnujintas sarasas
     setData(filteredData);
-    localStorage.setItem('data', JSON.stringify(filteredData));
   };
 
   const handleRemoveFromCard = (item) => {
     setData([...data, item]);
-    localStorage.setItem('data', JSON.stringify([item, ...data]));
 
     const filteredCardData = cardData.filter(
       (dataItem) => dataItem.title !== item.title

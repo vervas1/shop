@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { handleSort } from '../../utils/sortUtils';
 
@@ -7,6 +7,7 @@ import SortButtons from '../SortButtons/SortButtons';
 import { AppContext } from '../../context/AppContext';
 
 function Best() {
+  const [searchValue, setSearchValue] = useState('');
   const { favoritesData, setFavoritesData } = useContext(AppContext);
 
   const handleSortData = (direction) => {
@@ -16,19 +17,30 @@ function Best() {
 
   return (
     <main className="main-container">
-      <SortButtons handleSortData={handleSortData} />
+      <div className="container-actions">
+        <SortButtons handleSortData={handleSortData} />
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => {
+            setSearchValue(e.target.value.toLowerCase());
+          }}
+        />
+      </div>
 
-      {favoritesData.map((item) => {
-        return (
-          <Card
-            key={item.title}
-            title={item.title}
-            description={item.description}
-            img={item.img}
-            handleCardButton={() => {}}
-          />
-        );
-      })}
+      {favoritesData
+        .filter(({ title }) => title.toLowerCase().includes(searchValue))
+        .map((item) => {
+          return (
+            <Card
+              key={item.title}
+              title={item.title}
+              description={item.description}
+              img={item.img}
+              handleCardButton={() => {}}
+            />
+          );
+        })}
     </main>
   );
 }
