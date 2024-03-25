@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Main from './Components/Main/Main';
 import MyCard from './Components/MyCard/MyCard';
 import Best from './Components/Best/Best';
+import Admin from './Components/Admin/Admin';
 import './App.scss';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/my-cart" element={<MyCard />} />
         <Route path="/best" element={<Best />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   );
