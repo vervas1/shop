@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { mockData } from '../mockData';
-import { CardText } from 'react-bootstrap';
+import { cfg } from '../cfg/cfg';
 
 export const AppContext = createContext();
 
@@ -8,17 +7,31 @@ function AppContextProvider(props) {
   const [cardData, setCardData] = useState(
     JSON.parse(localStorage.getItem('cardData')) || []
   );
-  const [data, setData] = useState(
-    JSON.parse(localStorage.getItem('data')) || mockData
-  );
+  const [data, setData] = useState([]);
   const [favoritesData, setFavoritesData] = useState(
     JSON.parse(localStorage.getItem('favoritesData')) || []
   );
 
   useEffect(() => {
-    localStorage.setItem('data', JSON.stringify(data));
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${cfg.API.HOST}/product`);
+
+        const products = await response.json();
+
+        const filteredData = products.filter(
+          (item) => !cardData.some((cardItem) => cardItem.title === item.title)
+        );
+
+        setData(filteredData);
+      } catch (error) {}
+    };
+    fetchData();
+  }, [cardData]);
+
+  useEffect(() => {
     localStorage.setItem('cartData', JSON.stringify(cardData));
-  }, [data, cardData]);
+  }, [cardData]);
 
   useEffect(() => {
     localStorage.setItem('favoritesData', JSON.stringify(favoritesData));
