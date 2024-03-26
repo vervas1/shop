@@ -16,7 +16,7 @@ function Best() {
   };
 
   return (
-    <main className="main-container">
+    <main className="custom-container">
       <div className="container-actions">
         <SortButtons handleSortData={handleSortData} />
         <input
