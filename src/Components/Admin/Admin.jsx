@@ -7,13 +7,13 @@ function Admin() {
   };
 
   return (
-    <div className="container">
+    <div className="custom-container">
       <h1>Add product</h1>
       <Container>
         {/* Funkcija rasom cia kad uzsikrovus puslapiui neatsirastu iskarto */}
         <Form noValidate onSubmit={handleSubmit}>
           <Row>
-            <Form.Group as={Col} md="12" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>First name</Form.Label>
               <Form.Control
                 required
