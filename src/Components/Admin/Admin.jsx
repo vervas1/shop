@@ -28,7 +28,6 @@ function Admin() {
 
     const form = e.currentTarget;
     if (!form.checkValidity()) return;
-    console.log('data submitted');
 
     try {
       setLoading(true);

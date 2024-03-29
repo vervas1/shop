@@ -8,6 +8,7 @@ import MyCard from './Components/MyCard/MyCard';
 import Best from './Components/Best/Best';
 import Admin from './Components/Admin/Admin';
 import './App.scss';
+import AdminUser from './Components/AdminUser/AdminUser';
 
 function App() {
   return (

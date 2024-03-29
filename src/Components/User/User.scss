@@ -12,11 +12,15 @@
   }
 }
 
-.offcanvas {
+.Offcanvas {
   background-color: var(---bg) !important;
 
   Offcanvas.Header {
     border-top: 2rem;
+  }
+
+  Offcanvas.Body {
+    background-color: var(---bg) !important;
   }
 }
 svg {
