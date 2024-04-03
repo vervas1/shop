@@ -30,6 +30,7 @@ function Main() {
           }}
         />
       </div>
+      {!data.length && <h2>No items in the store...</h2>}
 
       {data
         // paieskos filterinimas

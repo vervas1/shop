@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
 import { cfg } from '../cfg/cfg';
 
 export const AppContext = createContext();
@@ -12,20 +12,21 @@ function AppContextProvider(props) {
     JSON.parse(localStorage.getItem('favoritesData')) || []
   );
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${cfg.API.HOST}/product`);
+
+      const products = await response.json();
+
+      const filteredData = products.filter(
+        (item) => !cardData.some((cardItem) => cardItem.title === item.title)
+      );
+
+      setData(filteredData);
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${cfg.API.HOST}/product`);
-
-        const products = await response.json();
-
-        const filteredData = products.filter(
-          (item) => !cardData.some((cardItem) => cardItem.title === item.title)
-        );
-
-        setData(filteredData);
-      } catch (error) {}
-    };
     fetchData();
   }, [cardData]);
 
@@ -72,6 +73,7 @@ function AppContextProvider(props) {
     <AppContext.Provider
       value={{
         cardData,
+        fetchData,
         setCardData,
         favoritesData,
         setFavoritesData,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Form,
   Container,
@@ -9,6 +9,8 @@ import {
   Alert,
 } from 'react-bootstrap';
 import { cfg } from '../../cfg/cfg';
+import { AppContext } from '../../context/AppContext';
+import useAuth from '../../hooks/useAuth';
 
 function Admin() {
   const [validated, setValidated] = useState(false);
@@ -20,6 +22,8 @@ function Admin() {
     value: null, //'success' || 'danger'
     message: '',
   });
+  const { token } = useAuth();
+  const { fetchData } = useContext(AppContext);
 
   const handleSubmit = async (e) => {
     setValidated(true);
@@ -42,6 +46,7 @@ function Admin() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });
@@ -49,6 +54,7 @@ function Admin() {
 
       if (!response.ok) throw new Error(product.error);
       setStatus({ value: 'success', message: 'Product successfully created ' });
+      await fetchData();
     } catch (error) {
       console.log('error', error.message);
       setStatus({

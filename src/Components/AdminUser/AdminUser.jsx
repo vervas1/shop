@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { cfg } from '../../cfg/cfg';
+import useAuth from '../../hooks/useAuth';
 
 function AdminUser() {
   const [show, setShow] = useState(false);
@@ -19,6 +20,7 @@ function AdminUser() {
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { token, setToken } = useAuth();
 
   const handleClose = () => {
     setShow(false);
@@ -50,6 +52,7 @@ function AdminUser() {
 
       const user = await response.json();
       console.log(user);
+      setToken(user.token);
     } catch (error) {
       console.log(error.message);
       setError(true);
@@ -64,55 +67,65 @@ function AdminUser() {
         <FontAwesomeIcon icon={faUser} />
       </div>
       <Offcanvas show={show} onHide={handleClose} placement="end">
-        <Offcanvas.Header closeButton closeVariant="white">
-          <Offcanvas.Title>Login</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          {error && <Alert variant="danger">Error</Alert>}
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Row>
-              <Form.Group as={Col} controlId="validationCustom01">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Username is required
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row style={{ marginTop: '1rem' }}>
-              <Form.Group as={Col} controlId="validationCustom02">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  required
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Password is required
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
+        {token ? (
+          <Offcanvas.Header closeButton closeVariant="white">
+            <Offcanvas.Title>
+              {token ? 'You are connected' : 'Please Login'}
+            </Offcanvas.Title>
+          </Offcanvas.Header>
+        ) : (
+          <>
+            <Offcanvas.Header closeButton closeVariant="white">
+              <Offcanvas.Title>Login</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              {error && <Alert variant="danger">Error</Alert>}
+              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Row>
+                  <Form.Group as={Col} controlId="validationCustom01">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Username is required
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Row>
+                <Row style={{ marginTop: '1rem' }}>
+                  <Form.Group as={Col} controlId="validationCustom02">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      required
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Password is required
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Row>
 
-            <Button
-              style={{ marginTop: '2rem' }}
-              type="submit"
-              disabled={loading}
-            >
-              Login
-            </Button>
-            {loading && <Spinner animation="border" variant="success" />}
-          </Form>
-        </Offcanvas.Body>
+                <Button
+                  style={{ marginTop: '2rem' }}
+                  type="submit"
+                  disabled={loading || token}
+                >
+                  Login
+                </Button>
+                {loading && <Spinner animation="border" variant="success" />}
+              </Form>
+            </Offcanvas.Body>
+          </>
+        )}
       </Offcanvas>
     </>
   );
