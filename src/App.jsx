@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
 
 // components import
 import Navbar from './Components/Navbar/Navbar';
@@ -8,9 +9,9 @@ import MyCard from './Components/MyCard/MyCard';
 import Best from './Components/Best/Best';
 import Admin from './Components/Admin/Admin';
 import './App.scss';
-import AdminUser from './Components/AdminUser/AdminUser';
 
 function App() {
+  const { token } = useAuth();
   return (
     <>
       {/* kad importuotusi i html, funk kompon is didzios raides */}
@@ -19,7 +20,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/my-cart" element={<MyCard />} />
         <Route path="/best" element={<Best />} />
-        <Route path="/admin" element={<Admin />} />
+        {token && <Route path="/admin" element={<Admin />} />}
       </Routes>
     </>
   );

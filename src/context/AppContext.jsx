@@ -4,6 +4,8 @@ import { cfg } from '../cfg/cfg';
 export const AppContext = createContext();
 
 function AppContextProvider(props) {
+  const [showLogin, setShowLogin] = useState(false);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [cardData, setCardData] = useState(
     JSON.parse(localStorage.getItem('cardData')) || []
   );
@@ -14,6 +16,7 @@ function AppContextProvider(props) {
 
   const fetchData = async () => {
     try {
+      setLoadingProducts(true);
       const response = await fetch(`${cfg.API.HOST}/product`);
 
       const products = await response.json();
@@ -23,7 +26,11 @@ function AppContextProvider(props) {
       );
 
       setData(filteredData);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoadingProducts(true);
+    }
   };
 
   useEffect(() => {
@@ -75,6 +82,9 @@ function AppContextProvider(props) {
         cardData,
         fetchData,
         setCardData,
+        showLogin,
+        setShowLogin,
+        loadingProducts,
         favoritesData,
         setFavoritesData,
         data,

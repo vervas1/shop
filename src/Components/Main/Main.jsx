@@ -9,7 +9,8 @@ import './main.scss';
 import { AppContext } from '../../context/AppContext';
 
 function Main() {
-  const { data, setData, handleAddToCard } = useContext(AppContext);
+  const { data, setData, handleAddToCard, loadingProducts } =
+    useContext(AppContext);
   // kintamasis paieskai
   const [searchValue, setSearchValue] = useState('');
 
@@ -30,7 +31,8 @@ function Main() {
           }}
         />
       </div>
-      {!data.length && <h2>No items in the store...</h2>}
+      {loadingProducts && !data.length && <h2>Loading...</h2>}
+      {!data.length && !loadingProducts && <h2>No items in the store...</h2>}
 
       {data
         // paieskos filterinimas
